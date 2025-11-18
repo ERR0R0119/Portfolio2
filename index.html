@@ -6,371 +6,9 @@
     <title>Amine_codes</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Loading Screen Styles */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: white;
-        }
-
-        .loading-logo {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .loading-logo .brand-dot {
-            color: #4cc9f0;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #4cc9f0;
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            animation: spin 1s linear infinite;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-text {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .loading-progress {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin: 0 auto;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 100%);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .loading-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .loading-icon {
-            font-size: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .loading-icon.html {
-            color: #e34f26;
-        }
-
-        .loading-icon.css {
-            color: #1572b6;
-        }
-
-        .loading-icon.js {
-            color: #f7df1e;
-        }
-
-        .loading-icon.react {
-            color: #61dafb;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Hide loading screen when loaded */
-        .loaded #loading-screen {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* Main content styles (simplified for demo) */
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .loaded body {
-            opacity: 1;
-        }
-
-        header {
-            background: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .brand-dot {
-            color: #4361ee;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: #4361ee;
-        }
-
-        .cta-btn {
-            background: #4361ee;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-
-        .cta-btn:hover {
-            background: #3a56d4;
-        }
-
-        .section {
-            padding: 5rem 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-
-        .home-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .accent {
-            color: #4361ee;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-desc {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #4361ee;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .hire-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .hire-btn.primary {
-            background: #4361ee;
-            color: white;
-        }
-
-        .hire-btn.primary:hover {
-            background: #3a56d4;
-        }
-
-        .hire-btn.secondary {
-            background: transparent;
-            color: #4361ee;
-            border: 1px solid #4361ee;
-        }
-
-        .hire-btn.secondary:hover {
-            background: rgba(67, 97, 238, 0.1);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #f1f3f9;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-icon:hover {
-            background: #4361ee;
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .home-image {
-            text-align: center;
-        }
-
-        .profile-image {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .home-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-stats {
-                justify-content: center;
-            }
-            
-            .hero-actions {
-                justify-content: center;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">Amine_codes<span class="brand-dot">.</span></div>
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Portfolio...</div>
-            <div class="loading-progress">
-                <div class="loading-progress-bar"></div>
-            </div>
-            <div class="loading-icons">
-                <div class="loading-icon html"><i class="fab fa-html5"></i></div>
-                <div class="loading-icon css"><i class="fab fa-css3-alt"></i></div>
-                <div class="loading-icon js"><i class="fab fa-js-square"></i></div>
-                <div class="loading-icon react"><i class="fab fa-react"></i></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
     <header>
         <nav class="navbar">
             <div class="nav-brand">Amine_codes<span class="brand-dot">.</span></div>
@@ -401,7 +39,11 @@
                         <div class="greeting">👋 Hello there!</div>
                         <h1 class="hero-title">I'm <span class="accent">Amine</span></h1>
                         <h2 class="hero-subtitle" id="rotating-profession">Web Developer</h2>
-                        <p class="hero-desc">I'm Amine, a passionate Software Developer who enjoys understanding how systems work — from low-level logic circuits to high-level applications. With solid experience in Java, C, and modern web technologies, I aim to create efficient, reliable, and scalable software that combines logic and creativity.</p>
+                        <p class="hero-desc">I'm Amine, a passionate Software Developer who enjoys understanding how systems work —
+from low-level logic circuits to high-level applications.
+
+With solid experience in Java, C, and modern web technologies,
+I aim to create efficient, reliable, and scalable software that combines logic and creativity.</p>
                         
                         <div class="hero-stats">
                             <div class="stat">
@@ -447,82 +89,566 @@
                     
                     <div class="home-image">
                         <div class="image-container">
-                            <img src="images/img.jpg" alt="Profile photo of Amine" class="profile-image">
+                            <img src="images/img.jpg" alt="Profile photo of Asep" class="profile-image">
+                            <div class="floating-card card-1">
+                                <i class="fas fa-code"></i>
+                                <span>Clean Code</span>
+                            </div>
+                            <div class="floating-card card-2">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="floating-card card-3">
+                                <i class="fas fa-rocket"></i>
+                                <span>Fast Loading</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Other sections would go here -->
         <section id="about" class="section about">
             <div class="container">
-                <h2 class="section-title">About Me</h2>
-                <!-- About content would go here -->
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-wrapper">
+                            <img src="images/img.jpg" alt="About Asep" class="about-img">
+                            <div class="experience-badge">
+                                <span class="badge-number">2+</span>
+                                <span class="badge-text">Years<br>Experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-text">
+                        <h2 class="section-title">About Me</h2>
+                        <div class="about-description">
+                            <p>I'm a passionate web developer based in Indonesia with a strong foundation in both frontend and backend technologies. My journey in web development started 3 years ago, and I've been constantly learning and adapting to new technologies ever since.</p>
+                            
+                            <p>I specialize in creating responsive, user-friendly websites and web applications using modern frameworks and libraries. My approach combines technical expertise with creative problem-solving to deliver solutions that not only look great but also perform exceptionally.</p>
+                            
+                            <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community through my blog and social media.</p>
+                        </div>
+
+                        <div class="about-highlights">
+                            <div class="highlight">
+                                <i class="fas fa-graduation-cap"></i>
+                                <div>
+                                    <h4>Education</h4>
+                                    <p>Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Location</h4>
+                                    <p>Boudouaou,Boumerdès,Algerie</p>
+                                </div>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-briefcase"></i>
+                                <div>
+                                    <h4>Experience</h4>
+                                    <p>2+ Years in Web Development</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-actions">
+                            <button class="about-btn">
+                                <span>Download CV</span>
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section skills">
+            <div class="container">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <div class="skills-content">
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Frontend Development</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fab fa-html5"></i>
+                                    <span>HTML5</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-css3-alt"></i>
+                                    <span>CSS3</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-js-square"></i>
+                                    <span>JavaScript</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Backend Development</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fab fa-node-js"></i>
+                                    <span>Node.js</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-python"></i>
+                                    <span>Python</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-server"></i>
+                                    <span>Express.js</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Database Management</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fas fa-database"></i>
+                                    <span>MongoDB</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-database"></i>
+                                    <span>MySQL</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-database"></i>
+                                    <span>PostgreSQL</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>DevOps & Tools</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fab fa-git-alt"></i>
+                                    <span>Git</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-docker"></i>
+                                    <span>Docker</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-code"></i>
+                                    <span>VS Code</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>UI/UX Design</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fab fa-figma"></i>
+                                    <span>Figma</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Adobe XD</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Responsive Design</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Mobile Development</h3>
+                            <div class="skill-items">
+                                <div class="skill-item">
+                                    <i class="fab fa-react"></i>
+                                    <span>React Native</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-android"></i>
+                                    <span>Android</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="fab fa-apple"></i>
+                                    <span>iOS</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="service" class="section services">
+            <div class="container">
+                <h2 class="section-title">What I Do</h2>
+                <div class="services-content">
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Web Development</h3>
+                            <p>I create responsive, modern websites using the latest technologies and best practices. From concept to deployment, I ensure your website looks great and performs perfectly.</p>
+                            <div class="service-features">
+                                <span>Responsive Design</span>
+                                <span>Performance Optimized</span>
+                                <span>SEO Friendly</span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3>Mobile Development</h3>
+                            <p>Building cross-platform mobile applications that work seamlessly on both iOS and Android devices using modern frameworks and tools.</p>
+                            <div class="service-features">
+                                <span>Cross-Platform</span>
+                                <span>Native Performance</span>
+                                <span>User-Friendly</span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3>UI/UX Design</h3>
+                            <p>Designing intuitive and beautiful user interfaces that provide exceptional user experiences. I focus on usability, accessibility, and visual appeal.</p>
+                            <div class="service-features">
+                                <span>User-Centered</span>
+                                <span>Modern Design</span>
+                                <span>Accessibility</span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Performance Optimization</h3>
+                            <p>Optimizing websites and applications for speed, scalability, and reliability. I ensure your digital products perform at their best under any conditions.</p>
+                            <div class="service-features">
+                                <span>Fast Loading</span>
+                                <span>Scalable</span>
+                                <span>Reliable</span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3>E-commerce Solutions</h3>
+                            <p>Building secure and efficient e-commerce platforms that drive sales and provide excellent shopping experiences for your customers.</p>
+                            <div class="service-features">
+                                <span>Secure Payments</span>
+                                <span>Inventory Management</span>
+                                <span>Analytics</span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3>API Development</h3>
+                            <p>Creating robust and scalable APIs that power your applications. I build RESTful and GraphQL APIs with proper documentation and testing.</p>
+                            <div class="service-features">
+                                <span>RESTful APIs</span>
+                                <span>GraphQL</span>
+                                <span>Documentation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="project" class="section projects">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-content">
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/Cleveroad.jpg" alt="Project 1">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>E-commerce Platform</h3>
+                                <p>A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.</p>
+                                <div class="project-tech">
+                                    <span>React</span>
+                                    <span>Node.js</span>
+                                    <span>MongoDB</span>
+                                    <span>Stripe</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/Task manager app.jpg" alt="Project 2">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Task Management App</h3>
+                                <p>A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.</p>
+                                <div class="project-tech">
+                                    <span>Vue.js</span>
+                                    <span>Firebase</span>
+                                    <span>Tailwind CSS</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/Weather Forecast Dashboard.jpg" alt="Project 3">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Weather Dashboard</h3>
+                                <p>An interactive weather dashboard with location-based forecasts, weather maps, and historical data visualization.</p>
+                                <div class="project-tech">
+                                    <span>JavaScript</span>
+                                    <span>Chart.js</span>
+                                    <span>OpenWeather API</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/pf.png" alt="Project 4">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Portfolio Website</h3>
+                                <p>A modern, responsive portfolio website showcasing creative work with smooth animations and interactive elements.</p>
+                                <div class="project-tech">
+                                    <span>HTML5</span>
+                                    <span>CSS3</span>
+                                    <span>JavaScript</span>
+                                    <span>GSAP</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/WordPress dashboard design concept.jpg" alt="Project 5">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Blog Platform</h3>
+                                <p>A full-featured blog platform with CMS capabilities, user management, and SEO optimization features.</p>
+                                <div class="project-tech">
+                                    <span>Next.js</span>
+                                    <span>Prisma</span>
+                                    <span>PostgreSQL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/Dashboard - Social Media Analytics.jpg" alt="Project 6">
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="#" class="project-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <a href="#" class="project-link">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Social Media Dashboard</h3>
+                                <p>A comprehensive social media management dashboard with analytics, scheduling, and multi-platform integration.</p>
+                                <div class="project-tech">
+                                    <span>React</span>
+                                    <span>D3.js</span>
+                                    <span>Express.js</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <p>amine_codes@example.com</p>
+                                <a href="mailto:asep@example.com">Send Email</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Phone</h3>
+                                <p>+221 00 11 22 33 44</p>
+                                <a href="tel:+00 11 22 33 44">Call Now</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Location</h3>
+                                <p>Boudouaou,Boumerdès,Algerie</p>
+                                <a href="#" target="_blank">View on Map</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>WhatsApp</h3>
+                                <p>+00 11 22 33 44</p>
+                                <a href="#" target="_blank">Send Message</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required>
+                                <label for="name">Your Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required>
+                                <label for="email">Your Email</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" required>
+                                <label for="subject">Your Subject</label>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <label for="message">Your Message</label>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <script>
-        // Loading screen functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.getElementById('loading-screen');
-            const progressBar = document.querySelector('.loading-progress-bar');
-            const loadingText = document.querySelector('.loading-text');
-            const loadingLogo = document.querySelector('.loading-logo');
-            const loadingSpinner = document.querySelector('.loading-spinner');
-            const loadingProgress = document.querySelector('.loading-progress');
-            const loadingIcons = document.querySelectorAll('.loading-icon');
-            
-            // Animate elements in sequence
-            setTimeout(() => {
-                loadingLogo.style.opacity = '1';
-                loadingLogo.style.transform = 'translateY(0)';
-            }, 300);
-            
-            setTimeout(() => {
-                loadingSpinner.style.opacity = '1';
-            }, 600);
-            
-            setTimeout(() => {
-                loadingText.style.opacity = '1';
-                loadingText.style.transform = 'translateY(0)';
-            }, 900);
-            
-            setTimeout(() => {
-                loadingProgress.style.opacity = '1';
-            }, 1200);
-            
-            // Animate icons with delay
-            loadingIcons.forEach((icon, index) => {
-                setTimeout(() => {
-                    icon.style.opacity = '1';
-                    icon.style.transform = 'translateY(0)';
-                }, 1500 + (index * 200));
-            });
-            
-            // Simulate loading progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 100) progress = 100;
-                progressBar.style.width = `${progress}%`;
-                
-                if (progress === 100) {
-                    clearInterval(progressInterval);
-                    
-                    // Add slight delay before hiding loading screen
-                    setTimeout(() => {
-                        document.body.classList.add('loaded');
-                        
-                        // Remove loading screen from DOM after transition
-                        setTimeout(() => {
-                            loadingScreen.remove();
-                        }, 800);
-                    }, 500);
-                }
-            }, 200);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
