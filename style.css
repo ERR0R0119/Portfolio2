@@ -61,6 +61,16 @@
   }
 }
 
+#main-page {
+  opacity:0;
+  transition: opacity 1s ease;
+}
+
+#main-page.visible {
+  opacity:1;
+}
+
+
 .sub-icons {
   display:flex;
   justify-content:center;
