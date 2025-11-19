@@ -23,15 +23,6 @@
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-#main-page {
-  opacity:0;
-  transition: opacity 1s ease;
-}
-
-#main-page.visible {
-  opacity:1;
-}
-
 #loading-screen {
   position: fixed;
   top:0; left:0;
