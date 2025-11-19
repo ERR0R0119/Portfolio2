@@ -532,3 +532,31 @@ if ('serviceWorker' in navigator) {
         //     .catch(error => console.log('SW registration failed'));
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const loadingText = document.getElementById("loading-text");
+  const mainIcon = document.querySelector(".main-icon");
+  const subIcons = document.querySelectorAll(".sub-icons i");
+  const designerText = document.getElementById("designer-text");
+  const mainPage = document.getElementById("main-page");
+  const loadingScreen = document.getElementById("loading-screen");
+
+  function showElement(element, delay=0){
+    setTimeout(() => {
+      element.classList.remove("hidden");
+      element.classList.add("fall");
+    }, delay);
+  }
+
+  showElement(loadingText, 0);          
+  showElement(mainIcon, 800);         
+  subIcons.forEach((icon, idx) => {
+    showElement(icon, 1600 + idx * 400);  
+  });
+  showElement(designerText, 2800);    
+
+  setTimeout(() => {
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => loadingScreen.style.display = 'none', 500);
+    if (mainPage) mainPage.classList.add("visible");
+  }, 4000);
+});
