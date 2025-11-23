@@ -1,5 +1,3 @@
-![Logo](protfile/images/pf.png)
-
 # 🌐 Modern Portfolio Website
 
 A sleek, responsive, and interactive personal portfolio website built using **HTML**, **CSS**, and **JavaScript**.  
