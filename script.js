@@ -561,3 +561,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mainPage) mainPage.classList.add("visible");
   }, 4000);
 });
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "service_3in2met",
+      });
+   })();
+</script>
