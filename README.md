@@ -50,36 +50,8 @@ You can easily customize the project by:
  ┃ ┗ 📂 fonts             # Custom fonts (optional)
  ┗ 📜 README.md           # Project documentation
 ```
+
+Made with ❤️ by **Loh**
 ---
-
-
-## 🚀 How to Run Locally
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/Saboo24/portfolio-website.git
-```
-### 2️⃣ Open the Folde
-```bash
-cd portfolio-website
-```
-3️⃣ Run the Website
-Open the file index.html directly in your browser — that’s it 🎉
-You’ll see your personal portfolio running locally
-
----
-
-## 📬 Contact
-
-- Email: aminehamzaoui1925@gmail.com   
-- Location: Boumerdès, Algeria  
-- LinkedIn: [LinkedIn](www.linkedin.com/in/mohamed-amine-hamzaoui-a2453a35b)  
-- GitHub: [GitHub](https://github.com/Saboo24)  
-- Instagram: [Instagram](https://www.instagram.com/a__m.i.n__e/?utm_source=ig_web_button_share_sheet)
-
----
-
-Made with ❤️ by **Amine Hamzaoui**
-
 
 
