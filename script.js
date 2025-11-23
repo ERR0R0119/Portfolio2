@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = navMenu?.classList.contains('active') ? 'hidden' : 'auto';
     }
 
-    // Smooth Scroll Navigation
+    // Smooth Scroll Navigation - FIXED VERSION
     function smoothScroll(event) {
         event.preventDefault();
         const targetId = this.getAttribute('href');
@@ -75,6 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const headerHeight = header?.offsetHeight || 80;
                 const offsetTop = targetElement.offsetTop - headerHeight;
                 
+                // Immediately update active state
+                updateActiveNavLink(targetId);
+                
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
@@ -84,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (navMenu?.classList.contains('active')) {
                     toggleMobileMenu();
                 }
-
-                // Update active state
-                updateActiveNavLink(targetId);
             }
         }
     }
@@ -112,38 +112,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Scroll-based Active Navigation
+    // Scroll-based Active Navigation - SIMPLIFIED VERSION
     function updateActiveNavFromScroll() {
         const sections = document.querySelectorAll('section[id]');
-        const scrollPosition = window.scrollY + (header?.offsetHeight || 80);
+        const scrollPosition = window.scrollY + 100;
 
-        let activeSection = null;
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                activeSection = section;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = '#' + section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                updateActiveNavLink(sectionId);
             }
         });
-
-        if (activeSection) {
-            const id = '#' + activeSection.getAttribute('id');
-            updateActiveNavLink(id);
-            
-            // Update URL hash
-            if (history.pushState) {
-                history.pushState(null, null, id);
-            }
-        } else if (scrollPosition < 100) {
-            updateActiveNavLink('#home');
-        }
     }
 
     // Throttled scroll listener
     let scrollTimeout;
     window.addEventListener('scroll', () => {
+        handleScroll();
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(updateActiveNavFromScroll, 50);
+        scrollTimeout = setTimeout(updateActiveNavFromScroll, 100);
     });
 
     // Intersection Observer for Animations
@@ -207,14 +197,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 600);
 
         // Add button-specific actions here
-        if (button.classList.contains('cta-btn') || button.textContent.includes('Hire')) {
-            // Scroll to contact section or show contact modal
+        if (button.classList.contains('cta-btn') || button.textContent.includes('Contact')) {
+            // Scroll to contact section
             const contactSection = document.querySelector('#contact');
             if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                // Fallback: show alert or modal
-                showNotification('Contact section coming soon!', 'info');
+                const headerHeight = header?.offsetHeight || 80;
+                const offsetTop = contactSection.offsetTop - headerHeight;
+                
+                updateActiveNavLink('#contact');
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
             }
         } else if (button.textContent.includes('Download CV')) {
             // Handle CV download
@@ -290,18 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Performance Optimized Scroll Handler
-    let ticking = false;
-    function optimizedScrollHandler() {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                handleScroll();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-
     // Debounced Resize Handler
     let resizeTimeout;
     function handleResize() {
@@ -314,24 +296,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 250);
     }
 
-    // Initialize Active Navigation from Hash
+    // Initialize Active Navigation
     function initializeActiveNav() {
-        const hash = window.location.hash || '#home';
-        updateActiveNavLink(hash);
-        
-        // Smooth scroll to section if hash exists
-        if (hash !== '#home') {
-            setTimeout(() => {
-                const targetElement = document.querySelector(hash);
-                if (targetElement) {
-                    const headerHeight = header?.offsetHeight || 80;
-                    window.scrollTo({
-                        top: targetElement.offsetTop - headerHeight,
-                        behavior: 'smooth'
-                    });
-                }
-            }, 500);
-        }
+        // Start with home active
+        updateActiveNavLink('#home');
     }
 
     // Event Listeners
@@ -365,9 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Global event listeners
-    window.addEventListener('scroll', optimizedScrollHandler);
     window.addEventListener('resize', handleResize);
-    window.addEventListener('hashchange', initializeActiveNav);
     document.addEventListener('keydown', handleKeyboard);
 
     // Handle clicks outside mobile menu
@@ -378,6 +344,42 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleMobileMenu();
         }
     });
+
+    // Contact form handling
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Simple validation
+            if (!data.name || !data.email || !data.subject || !data.message) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Show notification FIRST
+            showNotification('Opening your email app…', 'success');
+
+            // Build mailto link
+            const mailtoLink =
+                "mailto:loh197452@gmail.com"
+                + "?subject=" + encodeURIComponent(data.subject)
+                + "&body=" + encodeURIComponent(
+                    "Name: " + data.name + "\n"
+                    + "Email: " + data.email + "\n\n"
+                    + data.message
+                );
+
+            // Wait 1000ms, then open mailto in new tab
+            setTimeout(() => {
+                window.open(mailtoLink, '_blank');
+            }, 1000);
+        });
+    }
 
     // Initialize everything
     function init() {
@@ -402,46 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log('Portfolio website initialized successfully! 🚀');
     }
-
-
-// Contact form handling
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-
-        // Simple validation
-        if (!data.name || !data.email || !data.subject || !data.message) {
-            showNotification('Please fill in all fields', 'error');
-            return;
-        }
-
-        // Show notification FIRST
-        showNotification('Opening your email app…', 'success');
-
-        // Build mailto link
-        const mailtoLink =
-            "mailto:loh197452@gmail.com"
-            + "?subject=" + encodeURIComponent(data.subject)
-            + "&body=" + encodeURIComponent(
-                "Name: " + data.name + "\n"
-                + "Email: " + data.email + "\n\n"
-                + data.message
-            );
-
-        // Wait 1000ms, then open mailto in new tab
-        setTimeout(() => {
-            window.open(mailtoLink, '_blank');
-        }, 1000); // adjust delay if needed
-    });
-}
-
-
-
 
     // Initialize the application
     init();
@@ -491,86 +453,32 @@ if (contactForm) {
     document.head.appendChild(style);
 });
 
-// Utility Functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
-
-// Performance monitoring
-if ('performance' in window) {
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const perfData = performance.timing;
-            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`Page loaded in ${pageLoadTime}ms`);
-        }, 0);
-    });
-}
-
-// Error handling
-window.addEventListener('error', (event) => {
-    console.error('JavaScript Error:', event.error);
-});
-
-window.addEventListener('unhandledrejection', (event) => {
-    console.error('Unhandled Promise Rejection:', event.reason);
-});
-
-// Service Worker Registration (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // Uncomment if you have a service worker
-        // navigator.serviceWorker.register('/sw.js')
-        //     .then(registration => console.log('SW registered'))
-        //     .catch(error => console.log('SW registration failed'));
-    });
-}
+// Loading screen animation
 document.addEventListener("DOMContentLoaded", () => {
-  const loadingText = document.getElementById("loading-text");
-  const mainIcon = document.querySelector(".main-icon");
-  const subIcons = document.querySelectorAll(".sub-icons i");
-  const designerText = document.getElementById("designer-text");
-  const mainPage = document.getElementById("main-page");
-  const loadingScreen = document.getElementById("loading-screen");
+    const loadingText = document.getElementById("loading-text");
+    const mainIcon = document.querySelector(".main-icon");
+    const subIcons = document.querySelectorAll(".sub-icons i");
+    const designerText = document.getElementById("designer-text");
+    const mainPage = document.getElementById("main-page");
+    const loadingScreen = document.getElementById("loading-screen");
 
-  function showElement(element, delay=0){
+    function showElement(element, delay=0){
+        setTimeout(() => {
+            element.classList.remove("hidden");
+            element.classList.add("fall");
+        }, delay);
+    }
+
+    showElement(loadingText, 0);          
+    showElement(mainIcon, 800);         
+    subIcons.forEach((icon, idx) => {
+        showElement(icon, 1600 + idx * 400);  
+    });
+    showElement(designerText, 2800);    
+
     setTimeout(() => {
-      element.classList.remove("hidden");
-      element.classList.add("fall");
-    }, delay);
-  }
-
-  showElement(loadingText, 0);          
-  showElement(mainIcon, 800);         
-  subIcons.forEach((icon, idx) => {
-    showElement(icon, 1600 + idx * 400);  
-  });
-  showElement(designerText, 2800);    
-
-  setTimeout(() => {
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => loadingScreen.style.display = 'none', 500);
-    if (mainPage) mainPage.classList.add("visible");
-  }, 4000);
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => loadingScreen.style.display = 'none', 500);
+        if (mainPage) mainPage.classList.add("visible");
+    }, 4000);
 });
