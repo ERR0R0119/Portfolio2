@@ -404,9 +404,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // Contact form handling
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
+// Contact form handling
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -420,6 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Show notification FIRST
+        showNotification('Opening your email app…', 'success');
+
         // Build mailto link
         const mailtoLink =
             "mailto:loh197452@gmail.com"
@@ -430,13 +433,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 + data.message
             );
 
-        // Success message
-        showNotification('Opening your email app…', 'success');
-        
-        // Open mailto in a NEW TAB
-        window.open(mailtoLink, '_blank');
+        // Wait 1000ms, then open mailto in new tab
+        setTimeout(() => {
+            window.open(mailtoLink, '_blank');
+        }, 1000); // adjust delay if needed
     });
 }
+
 
 
 
