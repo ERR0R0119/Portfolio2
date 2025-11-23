@@ -430,11 +430,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 + data.message
             );
 
-        // Open mailto in a NEW TAB
-        window.open(mailtoLink, '_blank');
-
         // Success message
         showNotification('Opening your email app…', 'success');
+        
+        // Open mailto in a NEW TAB
+        window.open(mailtoLink, '_blank');
     });
 }
 
