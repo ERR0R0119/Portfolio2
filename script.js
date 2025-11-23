@@ -403,32 +403,42 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Portfolio website initialized successfully! 🚀');
     }
 
+
     // Contact form handling
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+        // Get form data
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
 
-            // Simple validation
-            if (!data.name || !data.email || !data.subject || !data.message) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
+        // Simple validation
+        if (!data.name || !data.email || !data.subject || !data.message) {
+            showNotification('Please fill in all fields', 'error');
+            return;
+        }
 
-            // Simulate form submission (replace with actual API call)
-            console.log('Form submitted:', data);
+        // Build mailto link
+        const mailtoLink =
+            "mailto:loh197452@gmail.com"
+            + "?subject=" + encodeURIComponent(data.subject)
+            + "&body=" + encodeURIComponent(
+                "Name: " + data.name + "\n"
+                + "Email: " + data.email + "\n\n"
+                + data.message
+            );
 
-            // Show success message
-            showNotification('Thank you for your message! I will get back to you soon.', 'success');
+        // Open mailto in a NEW TAB
+        window.open(mailtoLink, '_blank');
 
-            // Reset form
-            this.reset();
-        });
-    }
+        // Success message
+        showNotification('Opening your email app…', 'success');
+    });
+}
+
+
 
     // Initialize the application
     init();
