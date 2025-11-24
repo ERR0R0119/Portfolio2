@@ -6,12 +6,17 @@
     user-select: none !important;
 }
 
-/* ALLOW form inputs to be editable */
-input, textarea {
+/* ALLOW form inputs to be fully editable */
+input, textarea, 
+.form-group input, .form-group textarea,
+input[type="text"], input[type="email"], 
+textarea, input:not([type]), 
+[contenteditable="true"] {
     -webkit-user-select: text !important;
     -moz-user-select: text !important;
     -ms-user-select: text !important;
     user-select: text !important;
+    pointer-events: auto !important;
 }
 
 /* Remove selection highlight globally */
@@ -144,40 +149,6 @@ input, textarea {
     .section, .container, .navbar, main, header, footer {
         display: none !important;
     }
-}
-
-/* Screenshot Protection - Blur effect when detecting screenshot attempts */
-.screenshot-protection {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(20px);
-    z-index: 99999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.screenshot-protection.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.screenshot-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #111111;
-    border: 2px solid #ff4444;
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    color: white;
-    max-width: 400px;
 }
 
 /* Link drag protection */
