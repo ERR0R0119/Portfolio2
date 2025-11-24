@@ -41,8 +41,18 @@ class CopyProtection {
         
         // Continuous selection clearing
         setInterval(() => {
-            if (window.getSelection().toString().length > 5) {
-                window.getSelection().removeAllRanges();
+            const selection = window.getSelection();
+            const selectedText = selection.toString();
+            
+            // Don't clear selection if it's within a form field
+            const activeElement = document.activeElement;
+            const isFormField = activeElement && (
+                activeElement.tagName === 'INPUT' || 
+                activeElement.tagName === 'TEXTAREA'
+            );
+            
+            if (selectedText.length > 5 && !isFormField) {
+                selection.removeAllRanges();
             }
         }, 100);
     }
@@ -50,6 +60,11 @@ class CopyProtection {
     setupSelectionProtection() {
         // Block selection start
         document.addEventListener('selectstart', (e) => {
+            // Allow selection in form fields
+            const isFormField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            if (isFormField) {
+                return true;
+            }
             e.preventDefault();
             return false;
         });
@@ -57,13 +72,22 @@ class CopyProtection {
         // Clear selection on mouse up
         document.addEventListener('mouseup', () => {
             setTimeout(() => {
-                window.getSelection().removeAllRanges();
+                const activeElement = document.activeElement;
+                const isFormField = activeElement && (
+                    activeElement.tagName === 'INPUT' || 
+                    activeElement.tagName === 'TEXTAREA'
+                );
+                
+                if (!isFormField) {
+                    window.getSelection().removeAllRanges();
+                }
             }, 50);
         });
         
         // Block drag selection
         document.addEventListener('mousedown', (e) => {
-            if (e.shiftKey) {
+            const isFormField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            if (e.shiftKey && !isFormField) {
                 e.preventDefault();
                 return false;
             }
@@ -140,6 +164,11 @@ class CopyProtection {
     setupRightClickProtection() {
         // Block right-click context menu
         document.addEventListener('contextmenu', (e) => {
+            // Allow right-click in form fields
+            const isFormField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            if (isFormField) {
+                return true;
+            }
             e.preventDefault();
             this.showNotification('🚫 Right-click disabled');
             return false;
@@ -147,6 +176,11 @@ class CopyProtection {
         
         // Block long press on touch devices
         document.addEventListener('touchstart', (e) => {
+            // Allow long press in form fields
+            const isFormField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            if (isFormField) {
+                return;
+            }
             this.touchTimer = setTimeout(() => {
                 e.preventDefault();
                 this.showNotification('🚫 Long press disabled');
@@ -188,7 +222,10 @@ class CopyProtection {
         if (!this.isEnabled) return;
         
         const selection = window.getSelection().toString();
-        if (selection.length > 5) {
+        // Allow copying from form fields
+        const isFormField = event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA';
+        
+        if (selection.length > 5 && !isFormField) {
             // BLOCK COPYING COMPLETELY
             event.preventDefault();
             
@@ -207,9 +244,14 @@ class CopyProtection {
     handlePaste(event) {
         if (!this.isEnabled) return;
         
-        event.preventDefault();
-        this.showNotification('🚫 Pasting disabled');
-        return false;
+        // Allow pasting in form fields
+        const isFormField = event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA';
+        
+        if (!isFormField) {
+            event.preventDefault();
+            this.showNotification('🚫 Pasting disabled');
+            return false;
+        }
     }
     
     showOverlay() {
@@ -259,3 +301,16 @@ window.copyProtection = copyProtection;
 if (window.self !== window.top) {
     window.top.location = window.self.location;
 }
+
+// Fix: Completely exclude form fields from protection
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove any protection from form elements
+    const formElements = document.querySelectorAll('input, textarea, .form-group input, .form-group textarea');
+    formElements.forEach(element => {
+        element.style.userSelect = 'text';
+        element.style.webkitUserSelect = 'text';
+        element.style.mozUserSelect = 'text';
+        element.style.msUserSelect = 'text';
+        element.style.pointerEvents = 'auto';
+    });
+});
