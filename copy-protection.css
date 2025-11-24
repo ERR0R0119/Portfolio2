@@ -1,0 +1,200 @@
+/* Text Copy Protection - Disable ALL text selection */
+* {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+/* ALLOW form inputs to be editable */
+input, textarea {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+/* Remove selection highlight globally */
+::selection {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+::-moz-selection {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+/* Copy Protection Overlay */
+.copy-protection-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.copy-protection-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.copy-protection-message {
+    background: #111111;
+    border: 2px solid #00d4ff;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 400px;
+    text-align: center;
+    color: white;
+}
+
+.copy-protection-btn {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.copy-tracking-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #111111;
+    border: 1px solid #00d4ff;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: white;
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.copy-tracking-notification.active {
+    transform: translateX(0);
+}
+
+/* PDF Watermark Protection */
+@media print {
+    body * {
+        visibility: hidden !important;
+    }
+    
+    body::before {
+        content: "" !important;
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 212, 255, 0.03) !important;
+        z-index: 9999;
+    }
+    
+    body::after {
+        content: "© 2025 Loh Hao Wei Portfolio - Protected Content | Unauthorized copying prohibited" !important;
+        display: block !important;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 36px !important;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.3) !important;
+        font-family: Arial, sans-serif !important;
+        font-weight: bold !important;
+        width: 100%;
+        z-index: 10000;
+        pointer-events: none;
+    }
+    
+    /* Watermark repeated across page */
+    .watermark-overlay {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 100px,
+            rgba(0, 212, 255, 0.02) 100px,
+            rgba(0, 212, 255, 0.02) 200px
+        ) !important;
+        z-index: 9998;
+        pointer-events: none;
+    }
+    
+    /* Hide actual content */
+    .section, .container, .navbar, main, header, footer {
+        display: none !important;
+    }
+}
+
+/* Screenshot Protection - Blur effect when detecting screenshot attempts */
+.screenshot-protection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.screenshot-protection.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.screenshot-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #111111;
+    border: 2px solid #ff4444;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
+
+/* Link drag protection */
+a, .nav-link, .cta-btn {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+}
+
+/* Disable image dragging */
+img {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: none !important;
+}
